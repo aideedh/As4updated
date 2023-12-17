@@ -1,0 +1,699 @@
+# As4 v3
+
+
+# Note For this program to work: You must set your own absolote path
+
+# IMPORTANT NOTE  IMPORTANT
+
+#PLEASE SET FILE PATH#   
+
+setpath = "C:/Users/aidee/Desktop/json/" #"file name.json"
+
+            # This is what it will look like bellow file_path = f"C:/Users/aidee/Desktop/json/{create}.json" 
+                                              # or  file_path = f"{setpath}{create}.json
+
+#IGNORE create variable it is made when 
+# - needs a blank folder with absolute path 
+# - as it will create json files inside and read from them based on named file
+
+
+
+
+import json
+
+
+class character:
+
+    def __init__(self, name, race, hair, gender):
+
+        self._name = name
+        self._race = race 
+        self._hair = hair
+        self._gender = gender 
+
+
+    # Getter methods
+    def get_name(self):
+        return self._name
+
+    def get_race(self):
+        return self._race
+
+    def get_hair(self):
+        return self._hair
+
+    def get_gender(self):
+        return self._gender
+    
+
+    # Setter methods
+    def set_name(self, name):
+        self._name = name
+
+    def set_race(self, race):
+        self._race = race
+
+    def set_hair(self, hair):
+        self._hair = hair
+
+    def set_gender(self, gender):
+        self._gender = gender
+
+
+
+    def save(self, file_path):
+
+        character_info = {
+             
+            "Name": self._name,
+            "Race": self._race,
+            "HairColor": self._hair,
+            "Gender": self._gender
+
+        }
+
+        with open(file_path, "w") as file:
+            json.dump(character_info, file, indent=2)
+
+
+
+
+    def Create():
+
+            create = input("Create the file name (suggestion 1 / 2 / 3): ")
+            print("------------------------------------------")
+            name = input("What is your name: ")
+            race = input("What is your race: elf / human / vampire / ghost: ")
+            hair = input("What is your hair color: ")
+            gender = input("What is your gender: ")
+            print("------------------------------------------")
+
+            # call class pass on args
+            test = character(name, race, hair, gender)
+
+            file_path = f"{setpath}{create}.json"                           #PLEASE SET FILE PATH#
+
+            # use test to run method save to proper file path
+            test.save(file_path)
+
+            print("Great! Now you have your basic character file!")
+            print("")
+
+            loop = True
+
+            while loop:
+
+                ans = input("Great you made your character, are you ready to move on? y/n : ")
+                
+                if ans != "y":
+                    loop = True
+
+                else:
+                    loop = False
+                    menu.MainMenu()
+
+
+
+    def Edit():
+
+            print("")
+            print("------------------------------------------")  
+            print(" You have choosen to edit your character  ")
+            print("------------------------------------------")
+
+            create = input("Enter the file name to edit (remember original file name): ")
+            file_path = f"{setpath}{create}.json"                               
+
+            # Check if the file exists before editing
+
+            try:
+                with open(file_path, "r") as file:
+                    data = json.load(file)
+            except FileNotFoundError:
+
+                print(f"File {create}.json does not exist. Please create a character first.")
+                ans = input("1. Try again or 2. Main Menu: (1/2):  ")
+
+                if ans == 1:
+                    menu.Edit()
+                else:
+                    menu.MainMenu()
+
+            
+            # Create an instance of the character with the loaded data
+            # this is important or it wont work
+            current_character = character(data['Name'], data['Race'], data['HairColor'], data['Gender'])    
+
+
+            print("")
+            print("--------------------------")
+            print("Current character details:")
+            print("--------------------------")
+            print(f"Name: {data['Name']}")
+            print(f"Race: {data['Race']}")
+            print(f"Hair Color: {data['HairColor']}")
+            print(f"Gender: {data['Gender']}")
+            print("------------------------------------------")
+            print("Editable Stats:")
+            print("------------------------------------------")
+            print("1. New Name")
+            print("2. New race: elf / human / vampire / ghost")
+            print("3. New Hair Color")
+            print("4. New gender")
+            print("5. Edit All")            
+            print("------------------------------------------")            
+            print("6. Exit Application")
+            print("------------------------------------------")
+
+
+            choice = int(input("Choice?: "))
+
+
+        # edit name
+
+            if choice == 1:
+
+                # get new name
+                name = input("New Name: ")
+            
+                # update name
+                current_character.set_name(name)
+
+                file_path = f"{setpath}{create}.json"
+                # use test to run method save to proper file path
+                current_character.save(file_path)
+
+                print("You have edited your character!")
+                print("Updated Stats: ", menu.View())
+                print("")
+
+                
+                # edit more?
+
+                editmore = input("Edit more? y/n: ")
+
+                if editmore == "y":
+                    
+                    menu.Edit()
+
+                else:
+
+                    menu.MainMenu()
+
+
+        # edit race
+
+            elif choice == 2:
+
+                # get new name
+                race = input("New Race: ")
+            
+                # update name
+                current_character.set_race(race)
+
+                file_path = f"{setpath}{create}.json"
+                # use test to run method save to proper file path
+                current_character.save(file_path)
+
+                print("You have edited your character!")
+                print("Updated Stats: ", menu.View())
+                print("")
+
+                
+                # edit more?
+
+                editmore = input("Edit more? y/n: ")
+
+                if editmore == "y":
+                    
+                    menu.Edit()
+
+                else:
+
+                    menu.MainMenu()
+
+
+        # edit hair
+
+            elif choice == 3:
+
+                # get new name
+                hair = input("New Hair Color: ")
+            
+                # update name
+                current_character.set_hair(hair)
+
+                file_path = f"{setpath}{create}.json"
+                # use test to run method save to proper file path
+                current_character.save(file_path)
+
+                print("You have edited your character!")
+                print("Updated Stats: ", menu.View())
+                print("")
+
+                
+                # edit more?
+
+                editmore = input("Edit more? y/n: ")
+
+                if editmore == "y":
+                    
+                    menu.Edit()
+
+                else:
+
+                    menu.MainMenu()
+
+
+        # edit gender
+
+            elif choice == 4:
+
+                # get new name
+                gender = input("New Gender: ")
+            
+                # update name
+                current_character.set_gender(gender)
+
+                file_path = f"{setpath}{create}.json"
+                # use test to run method save to proper file path
+                current_character.save(file_path)
+
+                print("You have edited your character!")
+                print("Updated Stats: ", menu.View())
+                print("")
+
+                
+                # edit more?
+
+                editmore = input("Edit more? y/n: ")
+
+                if editmore == "y":
+                    
+                    menu.Edit()
+
+                else:
+
+                    menu.MainMenu()
+                    
+
+        # edit All
+
+            elif choice == 5:
+
+                # New stats
+                name = input("New name: ")
+                race = input("New race: elf / human / vampire / ghost: ")
+                hair = input("New hair color: ")
+                gender = input("New gender: ")
+            
+
+                # update stats
+
+                current_character.set_name(name)
+                current_character.set_race(race)
+                current_character.set_hair(hair)
+                current_character.set_gender(gender)
+
+
+                file_path = f"{setpath}{create}.json"
+                # use test to run method save to proper file path
+                current_character.save(file_path)
+
+                print("You have edited your character!")
+                print("Updated Stats: ", menu.View())
+                print("")
+
+
+                ans = input("continue: y/n: ")
+
+                while ans != "y":
+
+                    ans = input("PLEASE continue: y: ")
+
+                else:
+                    menu.MainMenu()
+            
+    # exit to MAinMEnu
+
+            elif choice == 6:
+
+                menu.MainMenu()
+
+
+
+    def Search():
+
+
+            create = input("Enter the file name to view (remember original file name): ")
+            file_path = f"{setpath}{create}.json"                                 
+            
+            # Check if the file exists before editing
+
+            try:
+                with open(file_path, "r") as file:
+                    view = json.load(file)
+                # print (view)
+            except FileNotFoundError:
+
+                print(f"File {create}.json does not exist. Please create a character first.")
+                ans = input("1. Try again or 2. Main Menu: (1/2):  ")
+
+                if ans == 1:
+                    menu.Search()
+                else:
+                    menu.MainMenu()
+
+
+            # create instance of character to load stats from
+
+            current_character = character(view['Name'], view['Race'], view['HairColor'], view['Gender'])   
+
+            print("-----------------------")
+            print("Search Character Stat")
+            print("----------------------")
+            print("1. Read Name")
+            print("2. Read Race")
+            print("3. Read Hair Color")
+            print("4. Read Gender")
+            print("5. Exit To Main Menu")
+            print("------------------------------")
+
+     
+            ans = int(input("What would you like to search?"))
+
+
+            if ans == 1:
+                
+                print(current_character.get_name())
+
+                # search more?
+                editmore = input("Search more? y/n: ")
+
+                if editmore == "y":
+                    
+                    menu.Search()
+
+                else:
+
+                    menu.MainMenu()
+
+
+            elif ans == 2:
+
+                print(current_character.get_race())
+
+                # search more?
+                editmore = input("Search more? y/n: ")
+
+                if editmore == "y":
+                    
+                    menu.Search()
+
+                else:
+
+                    menu.MainMenu()
+
+            elif ans == 3:
+
+                print(current_character.get_hair())
+
+                # search more?
+                editmore = input("Search more? y/n: ")
+
+                if editmore == "y":
+                    
+                    menu.Search()
+
+                else:
+
+                    menu.MainMenu()
+
+            elif ans == 4:
+
+                print(current_character.get_gender())
+
+                # search more?
+                editmore = input("Search more? y/n: ")
+
+                if editmore == "y":
+                    
+                    menu.Search()
+
+                else:
+
+                    menu.MainMenu()
+
+            elif ans == 5:
+
+                menu.MainMenu
+
+            else:
+
+                print("Please Make A Choice!")
+                menu.Search()
+
+
+
+    def Delete():
+
+            create = input("Enter the file name to view (remember original file name): ")
+            file_path = f"{setpath}{create}.json"                                 
+            
+            # Check if the file exists before editing
+
+            try:
+                with open(file_path, "r") as file:
+                    view = json.load(file)
+                # print (view)    shows all stats if this is left
+
+            except FileNotFoundError:
+
+                print(f"File {create}.json does not exist. Please create a character first.")
+                ans = input("1. Try again or 2. Main Menu: (1/2):  ")
+
+                if ans == 1:
+                    menu.Delete()
+                else:
+                    menu.MainMenu()
+
+
+          # create instance of character to load stats from
+
+            current_character = character(view['Name'], view['Race'], view['HairColor'], view['Gender'])    
+
+            print("-----------------------")
+            print("Delete Character Stat")
+            print("----------------------")
+            print("1. Name")
+            print("2. Race")
+            print("3. Hair Color")
+            print("4. Gender")
+            print("5. Exit To Main Menu")
+            print("---------------------")
+
+     
+            ans = int(input("What Stat would you like to delete: "))
+
+
+            if ans == 1:
+                
+                current_character.set_name("")
+
+                file_path = f"{setpath}{create}.json"
+                # use test to run method save to proper file path
+                current_character.save(file_path)
+
+                print("Stat Deleted")
+                print("Updated Stats: ", menu.View())
+
+                # Delete more?
+                editmore = input("Delete more? y/n: ")
+
+                if editmore == "y":
+                    
+                    menu.Delete()
+
+                else:
+
+                    menu.MainMenu()
+
+
+            elif ans == 2:
+
+                current_character.set_race("")
+
+                file_path = f"{setpath}{create}.json"
+                # use test to run method save to proper file path
+                current_character.save(file_path)
+
+                print("Stat Deleted")
+                print("Updated Stats: ", menu.View())
+
+                # Delete more?
+                editmore = input("Delete more? y/n: ")
+
+                if editmore == "y":
+                    
+                    menu.Delete()
+
+                else:
+
+                    menu.MainMenu()
+
+            elif ans == 3:
+
+                current_character.set_hair("")
+
+                file_path = f"{setpath}{create}.json"
+                # use test to run method save to proper file path
+                current_character.save(file_path)
+
+                print("Stat Deleted")
+                print("Updated Stats: ", menu.View())
+
+                # Delete more?
+                editmore = input("Delete more? y/n: ")
+
+                if editmore == "y":
+                    
+                    menu.Delete()
+
+                else:
+
+                    menu.MainMenu()
+
+            elif ans == 4:
+
+                current_character.set_gender("")
+
+                file_path = f"{setpath}{create}.json"
+                # use test to run method save to proper file path
+                current_character.save(file_path)
+
+                print("Stat Deleted")
+                print("Updated Stats: ", menu.View())
+
+                # Delete more?
+                editmore = input("Delete more? y/n: ")
+
+                if editmore == "y":
+                    
+                    menu.Delete()
+
+                else:
+
+                    menu.MainMenu()
+
+            elif ans == 5:
+
+                menu.MainMenu
+
+            else:
+
+                print("Please Make A Choice! ")
+                menu.Delete()
+
+
+
+    def View():
+
+            create = input("Enter the file name to view (remember original file name): ")
+            file_path = f"{setpath}{create}.json"                             
+            
+            # Check if the file exists before editing
+
+            try:
+                with open(file_path, "r") as file:
+                    view = json.load(file)
+                print (view)
+            except FileNotFoundError:
+
+                print(f"File {create}.json does not exist. Please create a character first.")
+                ans = input("1. Try again or 2. Main Menu: (1/2):  ")
+
+                if ans == 1:
+                    menu.View()
+                else:
+                    menu.MainMenu()
+
+
+            # loop 
+            loop = True
+            resume = input("continue? y/n: ")
+
+            while resume != "y":
+                loop = True
+            
+            else:
+                loop = False
+                menu.MainMenu()
+
+
+
+    def MainMenu():
+
+        print("")
+        print("------------------------------------------")
+        print("Welcome To Character Customization Creator")
+        print("------------------------------------------")
+        print("Please make a selection from the following")
+        print("------------------------------------------")
+        print("1. Create Character")
+        print("2. Edit Character")
+        print("3. Read(Search) Character")
+        print("4. Delete Character Stat")
+        print("5. View All Stats")
+        print("6. Exit Application")
+        print("------------------------------------------")
+
+        ans = int(input("Please select a number to proceed: "))
+
+
+    # Create Character
+
+        if ans == 1:
+
+            menu.Create()
+
+    # Edit Character
+
+        elif ans == 2:
+
+            menu.Edit()
+
+    # Read(Search) Character
+
+        elif ans == 3:
+
+            menu.Search()
+
+    # Delete Character Stat
+
+        elif ans == 4:
+
+            menu.Delete()
+
+    # View All Stats
+
+        elif ans == 5:
+
+            menu.View()
+            
+    # Exit App
+
+        elif ans == 6:
+
+
+            print("Thanks for using Character Creator!")
+            print("- Application Closed -")
+            exit()
+
+        else:
+            print("Please make a selection!")
+
+
+
+
+menu = character
+menu.MainMenu()
